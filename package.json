@@ -1,11 +1,11 @@
 {
-    "name": "jquery-csrf-token",
-    "version": "0.0.1",
-    "author": "Kees Kluskens <kees@codeyellow.nl>",
-    "description": "Add a X-CSRF-TOKEN header to each AJAX request.",
-    "repository": {
-        "type": "git",
-        "url": "https://bitbucket.org/codeyellow/jquery-csrf-token"
-    },
-    "main": "index.js"
+  "name": "jquery-csrf-token",
+  "version": "0.1.0",
+  "author": "Kees Kluskens <kees@codeyellow.nl>",
+  "description": "Add a X-CSRF-TOKEN header to each AJAX request.",
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/codeyellow/jquery-csrf-token"
+  },
+  "main": "index.js"
 }
