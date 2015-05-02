@@ -22,7 +22,8 @@ define(function (require) {
             options.beforeSend = function (xhr) {
                 // The csrf token is valid for the duration of the session,
                 // so it's safe to use a static token.
-                xhr.setRequestHeader('X-CSRF-TOKEN', bootstrapper.csrf_token);
+                xhr.setRequestHeader('X-CSRF-TOKEN', bootstrapper.csrf_token); // Laravel
+                xhr.setRequestHeader('X-CSRFToken', bootstrapper.csrf_token); // Django
             };
         }
     });
