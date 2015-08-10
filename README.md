@@ -9,17 +9,12 @@ In the following situations no header is set:
 
 Laravel uses the `X-CSRF-TOKEN` header to check for a CSRF token. Django uses `X-CSRFToken`.
 
-It has a dependency on jQuery and `bootstrapper`;
-
-Meaning this should work:
-
-```js
-var bootstrapper = require('bootstrapper');
-console.log(bootstrapper.csrf_token); // Should return current csrf token.
-```
+It's only dependency is on jQuery.
 
 ## Usage
 
 ```js
-require('jquery-csrf-token');
+var useCsrfToken = require('jquery-csrf-token');
+
+useCsrfToken('my-beautiful-csrf-token');
 ```
