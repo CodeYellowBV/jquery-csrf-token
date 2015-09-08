@@ -19,10 +19,14 @@ define(function (require) {
         $.ajaxPrefilter(function (options) {
             // The header should only be set when the request is local.
             if (!csrfSafeMethod(options.type) && !options.crossDomain) {
+                var oldBeforeSend = options.beforeSend;
                 options.beforeSend = function (xhr) {
                     // The csrf token is valid for the duration of the session,
                     // so it's safe to use a static token.
                     xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                    if (oldBeforeSend) {
+                        oldBeforeSend.apply(this, arguments);
+                    }
                 };
             }
         });
