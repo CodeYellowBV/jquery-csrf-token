@@ -10,9 +10,15 @@ define(function (require) {
         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
     }
 
-    return function jqueryCsrfToken(token) {
+    return function jqueryCsrfToken(token, config) {
+        config || (config = {});
+
         if (!token) {
             console.warn('Csrf token is not set!');
+        }
+
+        if (!config.key) {
+            config.key = 'X-CSRF-TOKEN';
         }
 
         // Set a header on every request with the current csrf token in it.
@@ -23,7 +29,7 @@ define(function (require) {
                 options.beforeSend = function (xhr) {
                     // The csrf token is valid for the duration of the session,
                     // so it's safe to use a static token.
-                    xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                    xhr.setRequestHeader(config.key, token);
                     if (oldBeforeSend) {
                         oldBeforeSend.apply(this, arguments);
                     }
