@@ -19,9 +19,8 @@ var useCsrfToken = require('jquery-csrf-token');
 useCsrfToken('my-beautiful-csrf-token', config);
 ```
 
-
 ### Config
 
-| name | default | description |
-|-|-|-|
-| key  | X-CSRF-TOKEN | The key under which the csrf token should be send. Use `X-CSRFTOKEN` for Django.
+| Name | Default | Description |
+| ---- | ------- | ----------- |
+| key  | X-CSRF-TOKEN | The key under which the csrf token should be send. Use `X-CSRFTOKEN` for Django. |
