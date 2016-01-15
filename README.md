@@ -11,6 +11,12 @@ Laravel uses the `X-CSRF-TOKEN` header to check for a CSRF token. Django uses `X
 
 It's only dependency is on jQuery.
 
+Installation:
+
+```
+$ npm install jquery-csrf-token --save
+```
+
 ## Usage
 
 ```js
