@@ -20,13 +20,21 @@ $ npm install jquery-csrf-token --save
 ## Usage
 
 ```js
-var useCsrfToken = require('jquery-csrf-token');
+var csrfToken = require('jquery-csrf-token');
 
-useCsrfToken('my-beautiful-csrf-token', config);
+csrfToken.enable('my-beautiful-csrf-token', config);
+
+csrfToken.setToken('updated-csrf-token');
 ```
 
-### Config
+## Config
 
 | Name | Default | Description |
 | ---- | ------- | ----------- |
 | key  | X-CSRF-TOKEN | The key under which the csrf token should be send. Use `X-CSRFTOKEN` for Django. |
+
+
+## Changelog
+
+### 1.0.0
+- Changed api to support changing the csrf token.
