@@ -1,56 +1,53 @@
-define(function (require) {
-    'use strict';
+import $ from 'jquery';
 
-    var $ = require('jquery');
-    var config = {};
-    var token = null;
+const config = {};
+let token = null;
 
-    // Function ripped from Django docs.
-    // See: https://docs.djangoproject.com/en/dev/ref/csrf/#ajax
-    function csrfSafeMethod (method) {
-        // These HTTP methods do not require CSRF protection.
-        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+// Function ripped from Django docs.
+// See: https://docs.djangoproject.com/en/dev/ref/csrf/#ajax
+function csrfSafeMethod(method) {
+    // These HTTP methods do not require CSRF protection.
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
+function csrfPrefilter(options, ...args) {
+    // The header should only be set when the request is local.
+    if (!csrfSafeMethod(options.type) && !options.crossDomain) {
+        const oldBeforeSend = options.beforeSend;
+        options.beforeSend = function (xhr) {
+            // The csrf token is valid for the duration of the session,
+            // so it's safe to use a static token.
+            xhr.setRequestHeader(config.key, token);
+            if (oldBeforeSend) {
+                oldBeforeSend(...args);
+            }
+        };
+    }
+}
+
+export function setToken(newToken) {
+    token = newToken;
+}
+
+export function enable(newToken, newConfig) {
+    newConfig || (newConfig = {});
+
+    if (!newToken) {
+        console.warn('CSRF token is not set!');
     }
 
-    function csrfPrefilter (options) {
-        // The header should only be set when the request is local.
-        if (!csrfSafeMethod(options.type) && !options.crossDomain) {
-            var oldBeforeSend = options.beforeSend;
-            options.beforeSend = function (xhr) {
-                // The csrf token is valid for the duration of the session,
-                // so it's safe to use a static token.
-                xhr.setRequestHeader(config.key, token);
-                if (oldBeforeSend) {
-                    oldBeforeSend.apply(this, arguments);
-                }
-            };
-        }
+    if (!newConfig.key) {
+        newConfig.key = 'X-CSRF-TOKEN';
     }
 
-    return {
-        enable: function (newToken, newConfig) {
-            newConfig || (newConfig = {});
+    config.key = newConfig.key;
 
-            if (!newToken) {
-                console.warn('Csrf token is not set!');
-            }
+    setToken(newToken);
 
-            if (!newConfig.key) {
-                newConfig.key = 'X-CSRF-TOKEN';
-            }
+    // Set a header on every request with the current csrf token in it.
+    $.ajaxPrefilter(csrfPrefilter);
+}
 
-            config.key = newConfig.key;
-
-            this.setToken(newToken);
-
-            // Set a header on every request with the current csrf token in it.
-            $.ajaxPrefilter(csrfPrefilter);
-        },
-        disable: function () {
-            // Does nothing yet...
-        },
-        setToken: function (newToken) {
-            token = newToken;
-        }
-    };
-});
+export function disable() {
+    // TODO: Does nothing yet...
+}

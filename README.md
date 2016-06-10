@@ -36,5 +36,9 @@ csrfToken.setToken('updated-csrf-token');
 
 ## Changelog
 
+### 2.0.0
+- add option to retry if token is invalid
+- use rollup build system
+
 ### 1.0.0
 - Changed api to support changing the csrf token.

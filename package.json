@@ -1,6 +1,6 @@
 {
   "name": "jquery-csrf-token",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "Kees Kluskens <kees@codeyellow.nl>",
   "description": "Add a X-CSRF-TOKEN and X-CSRFToken header to each AJAX request.",
   "repository": {
@@ -18,5 +18,20 @@
     "index.js"
   ],
   "license": "ISC",
-  "main": "index.js"
+  "main": "dist/jquery-csrf-token.js",
+  "files": [
+    "dist/**"
+  ],
+  "devDependencies": {
+    "babel-preset-es2015-rollup": "^1.1.1",
+    "eslint": "^2.7.0",
+    "eslint-config-codeyellow": "^0.3.0",
+    "rollup": "^0.29.0",
+    "rollup-plugin-babel": "^2.5.1"
+  },
+  "scripts": {
+    "lint": "eslint index.js && echo 'Linting succeeded.'",
+    "build": "rm -f dist/** && node build.js",
+    "version": "git add -A dist"
+  }
 }
