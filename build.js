@@ -12,7 +12,7 @@ rollup.rollup({
     bundle.write({
         format: 'umd',
         moduleId: 'jquery-csrf-token',
-        moduleName: 'jqueryCSRFToken',
+        moduleName: 'jqueryCsrfToken',
         dest: 'dist/jquery-csrf-token.js',
     });
 }).catch((err) => {
