@@ -32,7 +32,15 @@ csrfToken.setToken('updated-csrf-token');
 | Name | Default | Description |
 | ---- | ------- | ----------- |
 | key  | X-CSRF-TOKEN | The key under which the csrf token should be send. Use `X-CSRFTOKEN` for Django. |
+| retry  | false | Allow to get a new token if the current one is expired |
 
+
+## Retry
+
+To be able to get a new token if the current one expired you need to pass a retry object for the config with two keys:
+
+* `url`: URL to request the new token
+* `getToken`: A function that takes the request response as a parameter and return the new token
 
 ## Changelog
 

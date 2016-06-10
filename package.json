@@ -14,9 +14,6 @@
     "jquery",
     "csrf"
   ],
-  "files": [
-    "index.js"
-  ],
   "license": "ISC",
   "main": "dist/jquery-csrf-token.js",
   "files": [
