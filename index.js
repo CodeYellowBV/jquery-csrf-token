@@ -1,6 +1,6 @@
-// LOL
+import jQuery from 'jquery';
 
-import $ from 'jquery';
+let $ = jQuery;
 
 const config = {};
 let token = null;
@@ -9,7 +9,7 @@ let token = null;
 // See: https://docs.djangoproject.com/en/dev/ref/csrf/#ajax
 function csrfSafeMethod(method) {
     // These HTTP methods do not require CSRF protection.
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/i.test(method));
 }
 
 function csrfPrefilter(options, ...args) {
@@ -93,13 +93,11 @@ function addRetrySupport(retryURL, parseResponse) {
                     let xhrSecondTry = null;
 
                     options.success = (dataSecondSuccess, textStatusSecondSuccess, jqXHRSecondSuccess) => {
-                        fakeJqXhrInheritance(fakeJqXhr, xhrSecondTry);
                         if (typeof success === 'function') success(dataSecondSuccess, textStatusSecondSuccess, jqXHRSecondSuccess);
                         pResult.resolve(dataSecondSuccess, textStatusSecondSuccess, jqXHRSecondSuccess);
                     };
 
                     options.error = (jqXHRSecondError, textStatusSecondError, errorThrownSecondError) => {
-                        fakeJqXhrInheritance(fakeJqXhr, xhrSecondTry);
                         if (typeof error === 'function') error(jqXHRSecondError, textStatusSecondError, errorThrownSecondError);
                         pResult.reject(jqXHRSecondError, textStatusSecondError, errorThrownSecondError);
                     };
@@ -153,6 +151,6 @@ export function enable(newToken, newConfig) {
     $.ajaxPrefilter(csrfPrefilter);
 }
 
-export function disable() {
-    // TODO: Does nothing yet...
+export function mockJQuery(jQuery) {
+    $ = jQuery;
 }
