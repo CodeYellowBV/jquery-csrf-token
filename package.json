@@ -34,7 +34,6 @@
     "build": "rm -f dist/** && node build.js",
     "pretest": "npm run -s build && npm run -s lint",
     "test": "ava test.js",
-    "preversion": "npm run -s test",
-    "version": "git add -A dist"
+    "preversion": "npm run -s test"
   }
 }
