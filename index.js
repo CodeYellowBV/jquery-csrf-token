@@ -151,6 +151,6 @@ export function enable(newToken, newConfig) {
     $.ajaxPrefilter(csrfPrefilter);
 }
 
-export function mockJQuery(jQuery) {
-    $ = jQuery;
+export function mockJQuery(mockedJquery) {
+    $ = mockedJquery;
 }

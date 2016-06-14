@@ -7,9 +7,5 @@ node_js:
 install:
   - npm install
 
-before_script:
-  - npm install -g ava
-
 script:
-  - npm run build
-  - npm test
+  - npm test -s
