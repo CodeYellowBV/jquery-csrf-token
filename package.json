@@ -14,9 +14,27 @@
     "jquery",
     "csrf"
   ],
-  "files": [
-    "index.js"
-  ],
   "license": "ISC",
-  "main": "index.js"
+  "main": "dist/jquery-csrf-token.js",
+  "files": [
+    "dist/**"
+  ],
+  "devDependencies": {
+    "ava": "^0.15.2",
+    "babel-preset-es2015-rollup": "^1.1.1",
+    "eslint": "^2.7.0",
+    "eslint-config-codeyellow": "^0.3.0",
+    "jquery": "^2.0.0",
+    "jsdom": "^9.2.1",
+    "rollup": "^0.29.0",
+    "rollup-plugin-babel": "^2.5.1"
+  },
+  "scripts": {
+    "lint": "eslint index.js && echo 'Linting succeeded.'",
+    "build": "rm -f dist/** && node build.js",
+    "pretest": "npm run -s build && npm run -s lint",
+    "test": "ava test.js",
+    "preversion": "npm run -s test",
+    "version": "git add -A dist"
+  }
 }
