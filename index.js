@@ -33,7 +33,7 @@ export function setToken(newToken) {
 
 
 /* Patch $.ajax to support expired CSRF tokens */
-function addRetrySupport(retryURL, parseResponse) {
+function addRetrySupport(retryConfig) {
     const originalAjax = $.ajax;
 
     /**
@@ -85,11 +85,11 @@ function addRetrySupport(retryURL, parseResponse) {
         const xhrFirstTry = originalAjax(options);
 
         xhrFirstTry.error((jqXHR, textStatus, errorThrown) => {
-            if (jqXHR.status === 403) {
+            if (jqXHR.status >= 400 && jqXHR.status < 500) {
                 // We assume that a csrf token mismatch happend, so fetch a new
                 // token and retry with the correct token.
-                originalAjax(retryURL).done((data) => {
-                    setToken(parseResponse(data));
+                originalAjax(retryConfig.url).done((data) => {
+                    setToken(retryConfig.parseResponse(data));
                     let xhrSecondTry = null;
 
                     options.success = (dataSecondSuccess, textStatusSecondSuccess, jqXHRSecondSuccess) => {
@@ -142,7 +142,7 @@ export function enable(newToken, newConfig) {
     config.key = newConfig.key;
 
     if (newConfig.retry) {
-        addRetrySupport(newConfig.retry.url, newConfig.retry.parseResponse);
+        addRetrySupport(newConfig.retry);
     }
 
     setToken(newToken);
