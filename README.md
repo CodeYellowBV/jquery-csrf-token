@@ -1,6 +1,6 @@
 # jquery-csrf-token
 
-[![Build Status: Linux](https://travis-ci.org/CodeYellowBV/jquery-csrf-token.svg?branch=master)](https://travis-ci.org/CodeYellowBV/jquery-csrf-token)
+[![Build Status: Linux](https://api.travis-ci.org/CodeYellowBV/jquery-csrf-token.svg)](https://travis-ci.org/CodeYellowBV/jquery-csrf-token)
 
 This package adds a csrf header to AJAX requests done via jQuery.
 
