@@ -42,7 +42,21 @@ csrfToken.setToken('updated-csrf-token');
 To be able to get a new token if the current one expired you need to pass a retry object for the config with two keys:
 
 * `url`: URL to request the new token
-* `parseResponse`: A function that takes the request response as a parameter and return the new token
+* `parseResponse`: A function that takes the token request response as a parameter and return the new token
+* `isCSRFFailure` (optional): A function that takes the failed request response as a parameter and return true if it's a CSRF failure. By default it just retry on every 403.
+
+Example:
+
+```
+    csrfToken.enable(data.csrf_token, {
+        key: 'X-CSRFTOKEN',
+        retry: {
+            url: 'api/bootstrap/',
+            parseResponse: resp => resp.csrf_token,
+            isCSRFFailure: resp => resp.statusCode === 403 && resp.responseJSON.message === 'CSRFFailure',
+        },
+    });
+```
 
 ## Changelog
 
