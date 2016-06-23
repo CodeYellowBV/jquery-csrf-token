@@ -145,7 +145,7 @@ export function enable(newToken, newConfig) {
     config.key = newConfig.key;
 
     if (newConfig.retry) {
-        addRetrySupport(newConfig.retry.retryURL, newConfig.retry.parseResponse,
+        addRetrySupport(newConfig.retry.url, newConfig.retry.parseResponse,
             newConfig.retry.isCSRFFailure);
     }
 
