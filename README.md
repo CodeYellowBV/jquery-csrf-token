@@ -60,6 +60,9 @@ Example:
 
 ## Changelog
 
+### 2.2.1
+- make sure custom functions are also inherited.
+ 
 ### 2.0.0
 - add option to retry if token is invalid
 - use rollup build system

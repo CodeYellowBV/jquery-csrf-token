@@ -1,5 +1,19 @@
 const window = require('jsdom').jsdom().defaultView;
 const $ = require('jquery')(window);
+
+const originalAjax = $.ajax;
+
+// Ovewrite so we can check that customFunction is still available later on.
+$.ajax = function (...args) {
+    const xhr = originalAjax.apply($, args);
+
+    xhr.customFunction = function () {
+        // Nop.
+    };
+
+    return xhr;
+};
+
 const C = require('./dist/jquery-csrf-token');
 C.mockJQuery($);
 
@@ -37,6 +51,17 @@ test('no token for a GET request', (t) => {
         crossDomain: false, // node.js requests are detected as cross-domain by jquery
     });
 });
+
+// See isse #5.
+test('adding custom function to $.ajax', (t) => {
+    const xhr = $.post({
+        url: 'test',
+        crossDomain: false, // node.js requests are detected as cross-domain by jquery
+    });
+
+    t.true(typeof xhr.customFunction === 'function');
+});
+
 
 test('retry with new token if request return a 403', (t) => {
     mockSend((options, headers, callback) => {

@@ -44,18 +44,13 @@ function addRetrySupport(retryURL, parseResponse, isCSRFFailure) {
      * behave properly.
      */
     function fakeJqXhrInheritance(fakeJqXhr, jqXhrToCopy) {
-        fakeJqXhr.readyState = jqXhrToCopy.readyState;
-        fakeJqXhr.status = jqXhrToCopy.status;
-        fakeJqXhr.statusText = jqXhrToCopy.statusText;
-        fakeJqXhr.responseXML = jqXhrToCopy.responseXML;
-        fakeJqXhr.responseText = jqXhrToCopy.responseText;
-        fakeJqXhr.responseJSON = jqXhrToCopy.responseJSON;
-        fakeJqXhr.getResponseHeader = jqXhrToCopy.getResponseHeader.bind(jqXhrToCopy);
-        fakeJqXhr.getAllResponseHeaders = jqXhrToCopy.getAllResponseHeaders.bind(jqXhrToCopy);
-        fakeJqXhr.setRequestHeader = jqXhrToCopy.setRequestHeader.bind(jqXhrToCopy);
-        fakeJqXhr.overrideMimeType = jqXhrToCopy.overrideMimeType.bind(jqXhrToCopy);
-        fakeJqXhr.statusCode = jqXhrToCopy.statusCode.bind(jqXhrToCopy);
-        fakeJqXhr.abort = jqXhrToCopy.abort.bind(jqXhrToCopy);
+        Object.keys(jqXhrToCopy).forEach((key) => {
+            if (typeof jqXhrToCopy[key] === 'function') {
+                fakeJqXhr[key] = jqXhrToCopy[key].bind(jqXhrToCopy);
+            } else {
+                fakeJqXhr[key] = jqXhrToCopy[key];
+            }
+        });
     }
 
     /**
