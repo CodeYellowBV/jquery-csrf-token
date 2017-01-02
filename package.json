@@ -1,6 +1,6 @@
 {
   "name": "jquery-csrf-token",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "author": "Kees Kluskens <kees@codeyellow.nl>",
   "description": "Add a X-CSRF-TOKEN and X-CSRFToken header to each AJAX request.",
   "repository": {
